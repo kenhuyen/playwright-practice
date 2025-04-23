@@ -1,9 +1,0 @@
-/*
-A. Lý thuyết:
-- Playwright
-+ node.js library automate chromium, firefox, webkit
-+ build enable cross-broswer web, testing
-+ webkit is a broswer engq
-+ 
-
-*/
