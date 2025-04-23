@@ -1,0 +1,31 @@
+name: Playwright Tests
+
+on:
+  push:
+    branches:
+      - main   # Chạy khi có push lên nhánh chính (có thể thay 'main' bằng nhánh khác nếu cần)
+  pull_request:
+    branches:
+      - main   # Chạy khi có pull request vào nhánh chính
+
+jobs:
+  test:
+    runs-on: ubuntu-latest  # Chạy trên máy ảo Ubuntu
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3  # Lấy mã nguồn về từ GitHub
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'  # Chọn phiên bản Node.js
+
+      - name: Install dependencies
+        run: npm ci  # Cài đặt tất cả các dependencies từ package-lock.json
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps  # Cài đặt trình duyệt mà Playwright cần
+
+      - name: Run Playwright tests
+        run: npx playwright test  # Chạy Playwright test

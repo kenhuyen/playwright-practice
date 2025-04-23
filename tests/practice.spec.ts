@@ -1,6 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { login } from "../utils/login";
-
+import { Header } from "../pages/Header";
+import { TurnOffZaloStatus } from "../pages/TurnOffZalo";
 // test("Test login with correct fileds", async ({ page }) => {
 //   // Trình duyệt và page đã tự động được mở bởi framework
 //   await page.goto("https://stage.remorquesdunord.net/login");
@@ -20,19 +21,33 @@ import { login } from "../utils/login";
 //   expect(dashboardTitle).toBe("Dashboard");
 // });
 
-test("Test login with correct fields", async ({ page }) => {
-  await login(page, "Huyen1", "Huyen0411"); // Gọi hàm đăng nhập
-  
-  const inventorySpan = page.locator("xpath=//span[text()='Inventory']");
-  const purchaseOrder = page.locator("xpath=//a[text()='Purchase Order']");
-  
-  await inventorySpan.waitFor({ state: "visible" });
-  await inventorySpan.click();
+// test("Test login with correct fields", async ({ page }) => {
+//   await login(page, "Huyen1", "Huyen0411"); // Gọi hàm đăng nhập
 
-  await purchaseOrder.waitFor({ state: "visible" });
-  await purchaseOrder.click();
-  const textPO= await purchaseOrder.textContent();
-  console.log(textPO);
-   
+//   const inventorySpan = page.locator("xpath=//span[text()='Inventory']");
+//   const purchaseOrder = page.locator("xpath=//a[text()='Purchase Order']");
+
+//   await inventorySpan.waitFor({ state: "visible" });
+//   await inventorySpan.click();
+
+//   await purchaseOrder.waitFor({ state: "visible" });
+//   await purchaseOrder.click();
+//   const textPO= await purchaseOrder.textContent();
+//   console.log(textPO);
+
+// });
+
+test("Test access to link TestAutoIo", async ({ page }) => {
+  const header = new Header(page);
+  await header.navigate();
+  // Kiểm tra tiêu đề của trang
+  const title = await header.getTitle();
+  console.log(`Home Title: ${title}`);
 
 });
+test('Test image in zalo', async({page}) => { 
+  
+  const turnOffZaloStatus = new TurnOffZaloStatus();
+  turnOffZaloStatus.turnOffZaloStatus;
+
+ })
