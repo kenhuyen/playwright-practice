@@ -3,10 +3,10 @@ name: Playwright Tests
 on:
   push:
     branches:
-      - main   # Chạy khi có push lên nhánh chính (có thể thay 'main' bằng nhánh khác nếu cần)
+      -  dev  # Chạy khi có push lên nhánh chính (có thể thay 'dev' bằng nhánh khác nếu cần)
   pull_request:
     branches:
-      - main   # Chạy khi có pull request vào nhánh chính
+      - dev   # Chạy khi có pull request vào nhánh dev
 
 jobs:
   test:
