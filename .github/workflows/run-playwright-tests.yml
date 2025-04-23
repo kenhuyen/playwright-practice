@@ -7,7 +7,7 @@ on:
   pull_request:
     branches:
       - dev   # Chạy khi có pull request vào nhánh dev
-
+  workflow_dispatch: # Bật nút "Run workflow" trên GitHub   
 jobs:
   test:
     runs-on: ubuntu-latest  # Chạy trên máy ảo Ubuntu
@@ -30,7 +30,7 @@ jobs:
       
       - name: Run Playwright tests
         run: npx playwright test
-
+  
       # - name: Install Xvfb
       #   run: sudo apt-get install -y xvfb
 
