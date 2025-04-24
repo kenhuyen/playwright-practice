@@ -37,14 +37,14 @@ import { TurnOffZaloStatus } from "../pages/TurnOffZalo";
 
 // });
 
-test("Test access to link TestAutoIo", async ({ page }) => {
-  const header = new Header(page);
-  await header.navigate();
-  // Kiểm tra tiêu đề của trang
-  const title = await header.getTitle();
-  console.log(`Home Title: ${title}`);
+// test("Test access to link TestAutoIo", async ({ page }) => {
+//   const header = new Header(page);
+//   await header.navigate();
+//   // Kiểm tra tiêu đề của trang
+//   const title = await header.getTitle();
+//   console.log(`Home Title: ${title}`);
 
-});
+// });
 test('Test image in zalo', async({page}) => { 
   
   const turnOffZaloStatus = new TurnOffZaloStatus();

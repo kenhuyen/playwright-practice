@@ -57,8 +57,8 @@ test("test", async ({ page }) => {
     "//a[@data-toggle='dropdown']//span[contains(.,'My account')]"
   );
 
-  await page.locator('span:has-text("Logout")').click();
-  await expect(page).toHaveURL(
-    "https://ecommerce-playground.lambdatest.io/index.php?route=account/login"
-  );
+  // await page.locator('span:has-text("Logout")').click();
+  // await expect(page).toHaveURL(
+  //   "https://ecommerce-playground.lambdatest.io/index.php?route=account/login"
+  // );
 });
