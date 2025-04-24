@@ -1,38 +1,38 @@
-# name: Playwright Tests
+name: Playwright Tests
 
-# on:
-#   push:
-#     branches:
-#       -  dev  # Chạy khi có push lên nhánh chính (có thể thay 'dev' bằng nhánh khác nếu cần)
-#   pull_request:
-#     branches:
-#       - dev   # Chạy khi có pull request vào nhánh dev
-#   workflow_dispatch: # Bật nút "Run workflow" trên GitHub   
-# jobs:
-#   test:
-#     runs-on: ubuntu-latest  # Chạy trên máy ảo Ubuntu
+on:
+  push:
+    branches:
+      -  dev  # Chạy khi có push lên nhánh chính (có thể thay 'dev' bằng nhánh khác nếu cần)
+  pull_request:
+    branches:
+      - dev   # Chạy khi có pull request vào nhánh dev
+  workflow_dispatch: # Bật nút "Run workflow" trên GitHub   
+jobs:
+  test:
+    runs-on: ubuntu-latest  # Chạy trên máy ảo Ubuntu
 
-#     steps:
-#       - name: Checkout code
-#         uses: actions/checkout@v3  # Lấy mã nguồn về từ GitHub
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3  # Lấy mã nguồn về từ GitHub
 
-#       - name: Setup Node.js
-#         uses: actions/setup-node@v3
-#         with:
-#           node-version: '18'  # Chọn phiên bản Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'  # Chọn phiên bản Node.js
 
-#       - name: Install dependencies
-#         run: npm ci  # Cài đặt tất cả các dependencies từ package-lock.json
+      - name: Install dependencies
+        run: npm ci  # Cài đặt tất cả các dependencies từ package-lock.json
 
       
-#       - name: Install Playwright Browsers
-#         run: npx playwright install --with-deps  # Cài đặt trình duyệt mà Playwright cần
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps  # Cài đặt trình duyệt mà Playwright cần
       
-#       - name: Run Playwright tests
-#         run: npx playwright test
+      - name: Run Playwright tests
+        run: npx playwright test
   
-#       # - name: Install Xvfb
-#       #   run: sudo apt-get install -y xvfb
+      # - name: Install Xvfb
+      #   run: sudo apt-get install -y xvfb
 
-#       # - name: Run Playwright tests with Xvfb
-#       #   run: xvfb-run npx playwright test  # Sử dụng xvfb-run để chạy Playwright với giao diện
+      # - name: Run Playwright tests with Xvfb
+      #   run: xvfb-run npx playwright test  # Sử dụng xvfb-run để chạy Playwright với giao diện
