@@ -1,43 +1,60 @@
-name: Playwright Tests with Report
-on: [push, pull_request]
+name: Playwright CI with Report & Notification
+
+on:
+  push:
+    branches: [dev]
+  pull_request:
+    branches: [dev]
+  workflow_dispatch:
 
 jobs:
   test:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
       - name: Install dependencies
         run: npm ci
-      - name: Run Playwright tests
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      - name: Run Playwright Tests
         run: npx playwright test --reporter=html
+
       - name: Upload HTML Report
         if: always()
         uses: actions/upload-artifact@v3
         with:
           name: playwright-report
           path: playwright-report/
-      - name: Test Report Summary
-        if: always()
-        uses: dorny/test-reporter@v1
-        with:
-          name: Playwright Results
-          path: playwright-report/results.json
 
   notify:
     needs: test
-    if: failure()
+    if: failure()  # 🔥 Chỉ chạy khi test fail
     runs-on: ubuntu-latest
+
     steps:
-      # - name: Slack Alert
-      #   uses: rtCamp/action-slack-notify@v2
-      #   env:
-      #     SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-      #     SLACK_MESSAGE: "Playwright tests failed! Xem report tại: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-    - name: Send Email Report
-      if: failure()
-      uses: dawidd6/action-send-mail@v3
-      with:
-        to: minracaty@gmail.com
-        subject: "Playwright Test Report - ${{ github.repository }}"
-        body: "Xem report đính kèm hoặc tại: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-        attachments: playwright-report/index.html
+      - name: Download report artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: playwright-report
+          path: report
+
+      - name: Send Email if Test Failed
+        uses: dawidd6/action-send-mail@v3
+        with:
+          to: minracaty@gmail.com
+          subject: "❌ Playwright Test Failed!"
+          body: |
+            Các bài kiểm thử Playwright đã thất bại. 
+            Xem báo cáo đính kèm hoặc tại: 
+            ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          attachments: report/index.html
