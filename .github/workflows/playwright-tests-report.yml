@@ -1,5 +1,4 @@
-name: Artifact Test
-
+name: Playwright Test & Deploy Report
 
 on:
   push:
@@ -11,12 +10,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Create file
-        run: echo "Hello Min 👋" > hello.txt
+      - name: Checkout code
+        uses: actions/checkout@v3
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      - name: Run Playwright tests with HTML Report
+        run: npx playwright test --reporter=html
+
+      - name: Deploy HTML report to GitHub Pages
+        if: always()
+        uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./playwright-report
