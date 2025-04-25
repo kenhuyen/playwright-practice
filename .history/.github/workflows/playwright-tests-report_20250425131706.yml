@@ -1,0 +1,21 @@
+name: Artifact Test
+
+on:
+  push:
+    branches: [dev]
+  workflow_dispatch:
+
+jobs:
+  test-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Create file
+        run: echo "Hello Min 👋" > hello.txt
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./playwright-report
+          publish_branch: gh-pages
