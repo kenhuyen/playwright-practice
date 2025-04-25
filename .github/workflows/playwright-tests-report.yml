@@ -1,4 +1,4 @@
-name: Playwright Tests with Report & Email
+name: Playwright CI with Report & Notification
 
 on:
   push:
@@ -26,13 +26,14 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
-      - name: Run Playwright tests with HTML Report
-        run: |
-          mkdir -p playwright-report  # Đảm bảo thư mục tồn tại
-          npx playwright test --reporter=html || true  # Luôn chạy tiếp dù test fail
+      - name: Run Playwright tests
+        run: npx playwright test --reporter=html
+
+      - name: Ensure report folder exists
+        run: mkdir -p playwright-report
 
       - name: Upload HTML Report
-        if: always()
+        if: always() # ✅ đảm bảo luôn upload dù test pass hay fail
         uses: actions/upload-artifact@v2
         with:
           name: playwright-report
@@ -40,7 +41,7 @@ jobs:
 
   notify:
     needs: test
-    if: failure()
+    if: failure() # ✅ chỉ chạy nếu job test bị fail
     runs-on: ubuntu-latest
 
     steps:
@@ -62,6 +63,6 @@ jobs:
           from: GitHub CI <minracaty@gmail.com>
           body: |
             Các bài kiểm thử Playwright đã thất bại 😢
-            👉 Xem báo cáo chi tiết tại:
-            ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+            Xem báo cáo chi tiết tại:
+            👉 ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           attachments: report/index.html
