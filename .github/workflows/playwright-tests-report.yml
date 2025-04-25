@@ -1,5 +1,6 @@
 name: Artifact Test
 
+
 on:
   workflow_dispatch:
 
@@ -9,6 +10,7 @@ jobs:
     steps:
       - name: Create file
         run: echo "Hello Min 👋" > hello.txt
+
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
